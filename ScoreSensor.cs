@@ -2,37 +2,22 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class FloatIntPair
-{
-  public float height;
-  public int score;
-}
 public class ScoreSensor : MonoBehaviour
 {
-  private int score;
-  // floatとintのセットをリストに保管
-  [SerializeField] private List<FloatIntPair> score_table;
-  [SerializeField] private Text score_text;
-
-  void Start()
+  [SerializeField] private int score;
+  [SerializeField] private GameObject game;
+  public void Score(bool _is_UR)
   {
-    score_table.Sort((a, b) => a.height.CompareTo(b.height));
-  }
-
-  public void Score(Transform _transform)
-  {
-    // debug
-    Debug.Log(_transform.position.y);
-    foreach (var pair in score_table)
+    int _score;
+    if (_is_UR)
     {
-      if (_transform.position.y < pair.height)
-      {
-        score += pair.score;
-        break;
-      }
+      _score = score * 2;
     }
-    score_text.text = score.ToString();
+    else
+    {
+      _score = score;
+    }
+    game.GetComponent<Game>().AddScore(_score);
   }
   void OnTriggerEnter2D(Collider2D other)
   {

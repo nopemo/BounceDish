@@ -10,6 +10,8 @@ public class DishesMaker : MonoBehaviour
     [SerializeField] private Vector2 strike_duration_range = new Vector2(-0.5f, 0.5f);
     [SerializeField] private float average_speed = 1.0f;
     [SerializeField] private float radius = 30f;
+    [SerializeField] private float UR_probability = 0.2f;
+
 
     [SerializeField] private GameObject dish;
     private float angle;
@@ -42,6 +44,9 @@ public class DishesMaker : MonoBehaviour
         float random_angle = Random.Range(angle_range.x, angle_range.y);
         Vector3 generate_position = new Vector3(radius * Mathf.Cos(Mathf.Deg2Rad * (random_angle)), radius * Mathf.Sin(Mathf.Deg2Rad * (random_angle)), 0f);
         GameObject new_dish = Instantiate(dish, generate_position, Quaternion.Euler(0, 0, random_angle));
+
+        bool is_UR = Random.value < UR_probability;
+        new_dish.GetComponent<Dish>().SetDetail(is_UR);
         new_dish.GetComponent<Rigidbody2D>().AddForce(-new_dish.transform.right * speed, ForceMode2D.Impulse);
     }
     void SetShootTime()

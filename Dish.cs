@@ -6,6 +6,7 @@ public class Dish : MonoBehaviour
   private Vector2 screen;
   private bool is_scored;
   private bool is_bounced;
+  private bool is_UR;
 
   void Start()
   {
@@ -41,7 +42,23 @@ public class Dish : MonoBehaviour
   public void Score(GameObject score_sensor)
   {
     if (!is_bounced) return;
+    if (is_scored) return;
     MarkAsScored();
-    score_sensor.GetComponent<ScoreSensor>().Score(transform);
+    score_sensor.GetComponent<ScoreSensor>().Score(is_UR);
+  }
+  public void SetDetail(bool _is_UR)
+  {
+    is_UR = _is_UR;
+    if (_is_UR)
+    {
+
+      int type_UR = Random.Range(0, 2);
+      gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("sushi/sushiUR" + type_UR);
+    }
+    else
+    {
+      int type_SR = Random.Range(0, 6);
+      gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("sushi/sushiSR" + type_SR);
+    }
   }
 }
