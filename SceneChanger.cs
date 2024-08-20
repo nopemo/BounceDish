@@ -14,6 +14,7 @@ namespace SceneChanger
     }
     public void QuitScene()
     {
+      Debug.Log("Moved to the title screen");
       SceneManager.LoadScene("Title");
     }
   }

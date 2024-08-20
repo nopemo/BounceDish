@@ -14,6 +14,7 @@ public class Timer : MonoBehaviour
   [SerializeField] private GameObject _normal_timer_bg;
   [SerializeField] private GameObject _emergency_timer_bg;
   [SerializeField] private GameObject _timer_arrow;
+  [SerializeField] private GameObject game;
 
 
   void Start()
@@ -71,14 +72,15 @@ public class Timer : MonoBehaviour
         Debug.Log("Time Over!");
         break;
       }
-      if (remaining_time <= 5.0f)
+      if (remaining_time <= total_time / 4.0f)
       {
         _normal_timer_bg.GetComponent<Image>().enabled = false;
         _emergency_timer_bg.GetComponent<Image>().enabled = true;
       }
-      _timer_arrow.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, -360 * elapsed_time / 30.0f);
+      _timer_arrow.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 0, -360 * elapsed_time / total_time);
       yield return null;
     }
+    game.GetComponent<Game>().GameOver();
   }
 
 }

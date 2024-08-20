@@ -6,6 +6,7 @@ public class Mirror : MonoBehaviour
 {
   // ミラーの回転中心にあるEmptyObjectにアタッチ
   [SerializeField] private float rotate_speed = 1.0f;
+  private bool is_game_over = false;
 
   // Start is called before the first frame update
   void Start()
@@ -17,6 +18,10 @@ public class Mirror : MonoBehaviour
   void Update()
   {
     // マウスの位置を取得
+    if (is_game_over)
+    {
+      return;
+    }
     Vector3 mousePosition = Input.mousePosition;
 
     mousePosition.z = 10f;
@@ -38,5 +43,9 @@ public class Mirror : MonoBehaviour
   public void Rotate(float _angle)
   {
     transform.rotation = Quaternion.Euler(0, 0, _angle);
+  }
+  public void GameOver()
+  {
+    is_game_over = true;
   }
 }
